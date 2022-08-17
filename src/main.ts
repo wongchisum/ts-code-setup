@@ -1,26 +1,32 @@
-import inquirer from "inquirer";
+import spawn from "cross-spawn";
 
-inquirer
-  .prompt([
-    {
-      type: "list",
-      name: "source",
-      message: "请选择项目的软件源",
-      choices: ["pnpm(推荐)", "yarn", "npm"],
-    },
-    {
-      type: "list",
-      name: "lang",
-      message: "请选择项目的语言",
-      choices: ["TypesScript(推荐)", "JavaScript"],
-    },
-    {
-      type: "checkbox",
-      name: "dependencies",
-      message: "请选择需要安装的依赖",
-      choices: ["Eslint(检查语法规范)", "Prettier(检查编码格式)", "Husky+Lint-staged(Git Hook)"],
-    },
-  ])
-  .then((answer) => {
-    console.log("answer", answer);
-  });
+export default function () {
+  require("inquirer")
+    .prompt([
+      {
+        type: "list",
+        name: "tool",
+        message: "请选择项目的依赖管理工具",
+        choices: ["pnpm", "yarn", "npm"],
+      },
+      {
+        type: "checkbox",
+        name: "dependencies",
+        message: "请选择需要安装的依赖",
+        choices: ["eslint", "prettier", "husky", "lint-staged", "typedoc"],
+      },
+    ])
+    .then((answer: any) => {
+      const { tool, dependencies } = answer;
+      if (tool && dependencies.length) {
+        let cmdArgs = ["typescript", "rollup", ...dependencies];
+        cmdArgs.unshift(tool, "add");
+        console.log(`Run command:`, cmdArgs.join(" "));
+        spawn.sync(tool, cmdArgs, { stdio: "inherit" });
+      }
+    })
+    .catch((err: any) => {
+      console.log("Error:", err);
+      process.exit(1);
+    });
+}
