@@ -44,7 +44,8 @@ export default function setup() {
           "rollup-plugin-node-resolve",
           "rollup-plugin-typescript2",
           "rollup-plugin-terser",
-          "cross-env"
+          "cross-env",
+          "esno"
         ];
         buildPlugins.unshift(tool, "add");
         buildPlugins.push("-D");
@@ -90,7 +91,9 @@ export default function setup() {
 
         processLog("正在配置npm scripts");
         // 设置项目的npm scripts
-        execSync(`npm set-script build "rollup --config rollup.config.js"`);
+        execSync(`npm set-script start "esno ./src/main.ts"`);
+        execSync(`npm set-script build:dev "rollup -c"`);
+        execSync(`npm set-script build:prod "cross-env NODE_ENV=production && rollup -c"`);
         execSync(`npm set-script lint:es "npx eslint src/** --fix"`);
         execSync(`npm set-script lint:code "prettier src/** --write"`);
         execSync(`npm set-script lint:staged "npx lint-staged -v"`);
