@@ -1,11 +1,20 @@
 {
-  "name": "ts-code-setup",
+  "name": "ts-lib-setup",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "ts-lib-setup": "bin/main.js"
+  },
   "scripts": {
     "dev": "esno ./src/main.ts",
-    "build": "rollup --config rollup.config.js"
+    "build:dev": "rollup -c",
+    "build:prod": "cross-env NODE_ENV=production && rollup -c",
+    "build": "rollup --config rollup.config.js",
+    "lint:es": "npx eslint src/** --fix",
+    "lint:code": "prettier src/** --write",
+    "lint:staged": "npx lint-staged -v",
+    "commit": "npx commity"
   },
   "keywords": [],
   "author": "",
@@ -17,22 +26,25 @@
     "@types/cross-spawn": "^6.0.2",
     "@types/inquirer": "^9.0.1",
     "@types/node": "^18.7.5",
+    "cross-env": "^7.0.3",
     "eslint": "^8.22.0",
     "esno": "^0.16.3",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
     "rollup": "^2.78.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.32.1",
     "tslib": "^2.4.0",
     "typedoc": "^0.23.10",
     "typescript": "^4.7.4"
   },
   "dependencies": {
+    "chalk": "4.1.2",
     "cross-spawn": "^7.0.3",
-    "husky": "^8.0.1",
-    "inquirer": "8.1.2",
-    "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1"
+    "inquirer": "8.1.2"
   }
 }
