@@ -1,11 +1,13 @@
 {
   "name": "ts-lib-setup",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
   "bin": {
     "ts-lib-setup": "bin/main.js"
   },
+  "files": [
+    "bin/",
+    "dist/"
+  ],
   "scripts": {
     "dev": "esno ./src/main.ts",
     "build:dev": "rollup -c",
