@@ -15,14 +15,14 @@ export default {
   plugins: [
     resolve(), 
     commonjs({
-      include: "node_modules/**", // 包括
-      exclude: [], // 排除
+      include: "node_modules/**", 
+      exclude: [],
     }),
     babel({
       // 运行babel配置
-      exclude: "**/node_modules/**", // 不打包node_modules中的文件
+      exclude: "**/node_modules/**",
     }),
-    typescript(), // typescript支持
+    typescript(),
     !isDev && terser()
   ],
   external:["child_process","path","fs"]
